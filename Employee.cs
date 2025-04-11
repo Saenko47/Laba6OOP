@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LabaOOP6
 {
     internal class Employee:Person
     {
+        const string datepattern = @"^\d{4},\d{2},\d{2}$";
         public DateTime dateOfJoin;
         public int YearsOfExperience => DateTime.Now.Year - dateOfJoin.Year;
         public Employee() : base()
@@ -16,12 +18,12 @@ namespace LabaOOP6
         }
         public Employee(string name, DateTime dateOfBirth, DateTime dateOfJoin) :base(name, dateOfBirth)
         {
-            this.dateOfJoin = dateOfJoin;
+            this.dateOfJoin = (Regex.IsMatch(dateOfJoin.ToString("yyyy,MM,dd"), datepattern) ? dateOfJoin : throw new Exception("Invalid dateOfJoin format."));
         }
         public DateTime DateOfJoin
         {
             get { return DateOfJoin; }
-            set { this.dateOfJoin = value; }
+            set { this.dateOfJoin = (Regex.IsMatch(value.ToString("yyyy,MM,dd"), datepattern) ? value : throw new Exception("Invalid dateOfJoin format.")); }
         }
         public  static void Exp(Employee[] person, int n)
         {
@@ -53,7 +55,7 @@ namespace LabaOOP6
         }
         public override string ToString()
         {
-          return $"{Name} (Worker) - Joined: {dateOfJoin.ToShortDateString()}, Experience: {YearsOfExperience} years.";
+          return $"{Name}, date of birth:{dateOfBirth} - Joined: {dateOfJoin.ToShortDateString()}, Experience: {YearsOfExperience} years.";
         }
     }
 }

@@ -13,14 +13,19 @@ namespace LabaOOP6
        
         static void Main(string[] args)
         {
-         //   Employee[] employees = new Employee[]
-         //{
-         //   new Worker("Alice", new DateTime(1990, 5, 1), new DateTime(2015, 6, 1)),
-         //   new Engineer("Bob", new DateTime(1985, 8, 12), new DateTime(2010, 2, 1)),
-         //   new Worker("Charlie", new DateTime(1980, 11, 22), new DateTime(2005, 1, 1)),
-         //   new Engineer("Diana", new DateTime(1992, 7, 7), new DateTime(2018, 4, 1)),
-         //};
-          
+        GenEmployee genEmployee = new GenEmployee();
+            Employee[] engineers = genEmployee.GenerateEngineer(10);
+            foreach (Employee engineer in engineers)
+            {
+                Console.WriteLine(engineer.ToString());
+            }
+            Console.WriteLine("//");
+            Employee.SortByExp(engineers);
+            foreach (Employee engineer in engineers)
+            {
+                Console.WriteLine(engineer.ToString());
+            }
+
 
         }
     }
