@@ -6,27 +6,27 @@
 //Ієрархія класів: службовець, особа, робітник, інженер. Варіант запиту:
 //кількість співробітників зі стажем щонайменше заданого, відсортованих у
 //порядку зростання стажу роботи.
+using System.Text.RegularExpressions;
+
 namespace LabaOOP6
 {
     internal class Program
     {
-       
+
         static void Main(string[] args)
         {
-        GenEmployee genEmployee = new GenEmployee();
-            Employee[] engineers = genEmployee.GenerateEngineer(10);
-            foreach (Employee engineer in engineers)
+            MilkProduct[] milp = GenProduct.GenerateMilkProduct(45);
+            foreach (MilkProduct product in milp)
             {
-                Console.WriteLine(engineer.ToString());
+                Console.WriteLine($"{product}\n");
             }
-            Console.WriteLine("//");
-            Employee.SortByExp(engineers);
-            foreach (Employee engineer in engineers)
-            {
-                Console.WriteLine(engineer.ToString());
-            }
-
-
+            //    Worker[] workers = GenEmployee.GenerateWorker(40);
+            //    Engineer[] engineers = GenEmployee.GenerateEngineer(40);
+            //    Employee[] employees = Facility.EmployeeMerch(workers, engineers);
+            //    Facility fac1 = new Facility(employees, "fdsf");
+            //    fac1.SortByExp();
+            //    Console.WriteLine(fac1.ToString());
+            //    fac1.WhoWillGetRaiseOfSalary();
         }
     }
 }

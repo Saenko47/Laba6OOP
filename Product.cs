@@ -13,48 +13,58 @@ namespace LabaOOP6
     {
         const string pattern = @"^[А-Яа-яЁё]+(\s[А-Яа-яЁё]+)*$";
         const string datepattern = @"^\d{4},\d{2},\d{2}$";
-        public string name;
-        public DateTime dateOfRealease;
+        public string? name;
+        public DateTime dateOfRelease;
         public DateTime dateOfExpire;
         public decimal price;
-        public string ob;
+        public string? ob;
+
         public Product()
         {
-            this.name = "No name";
-            this.dateOfRealease = DateTime.Now;
+            this.name = null;
+            this.dateOfRelease = DateTime.Now;
             this.dateOfExpire = DateTime.Now;
             this.price = 0;
+            this.ob = null;
         }
-        public Product(string name, DateTime dateOfRealease, DateTime dateOfExpire, decimal price)
+
+        public Product(string name, DateTime dateOfRelease, DateTime dateOfExpire, decimal price, string ob = null)
         {
-            this.name = (Regex.IsMatch(name,pattern))?name:throw new Exception("Wrong name format");
-            this.dateOfRealease = (Regex.IsMatch(dateOfRealease.ToString("yyyy,MM,dd"), datepattern) ? dateOfRealease : throw new Exception("Invalid dateOfRealease format."));
+            this.name = (Regex.IsMatch(name, pattern)) ? name : null;
+            this.dateOfRelease = (Regex.IsMatch(dateOfRelease.ToString("yyyy,MM,dd"), datepattern) ? dateOfRelease : throw new Exception("Invalid dateOfRelease format."));
             this.dateOfExpire = (Regex.IsMatch(dateOfExpire.ToString("yyyy,MM,dd"), datepattern) ? dateOfExpire : throw new Exception("Invalid dateOfExpire format."));
-            this.price = (price>0)? price : throw new Exception("Wrong price format");
+            this.price = (price > 0) ? price : 0;
+            this.ob = ob;
         }
+
         public string Name
         {
             get { return this.name; }
-            set { this.name = (Regex.IsMatch(value, pattern)) ? value : throw new Exception("Wrong name format"); }
+            set { this.name = (Regex.IsMatch(value, pattern)) ? value : null; }
         }
-        public DateTime DateOfRealease
+
+        public DateTime DateOfRelease
         {
-            get { return this.dateOfRealease; }
-            set { this.dateOfRealease = (Regex.IsMatch(value.ToString("yyyy,MM,dd"), datepattern) ? value : throw new Exception("Invalid dateOfRealease format.")) ; }
+            get { return this.dateOfRelease; }
+            set { this.dateOfRelease = (Regex.IsMatch(value.ToString("yyyy,MM,dd"), datepattern) ? value : throw new Exception("Invalid dateOfRelease format.")); }
         }
+
         public DateTime DateOfExpire
         {
             get { return this.dateOfExpire; }
             set { this.dateOfExpire = (Regex.IsMatch(value.ToString("yyyy,MM,dd"), datepattern) ? value : throw new Exception("Invalid dateOfExpire format.")); }
         }
+
         public decimal Price
         {
             get { return this.price; }
-            set { this.price = (value > 0) ? value : throw new Exception("Wrong price format"); }
+            set { this.price = (value > 0) ? value : 0; }
         }
-        public virtual bool IsProductIsExpired()
+
+       
+    public virtual bool IsProductIsExpired()
         {
-            if (DateTime.Now < dateOfExpire)
+            if (DateTime.Now > dateOfExpire)
             {
                 return true;
             }
@@ -68,7 +78,7 @@ namespace LabaOOP6
         public override string ToString()
         {
             return $"Назва: {name}\n" +
-                   $"Дата випуску: {dateOfRealease.ToShortDateString()}\n" +
+                   $"Дата випуску: {dateOfRelease.ToShortDateString()}\n" +
                    $"Термін придатності до: {DateOfExpire.ToShortDateString()}\n" +
                    $"Ціна: {price:C}\n" +
                    $"Придатний: {ForExpire()}";
